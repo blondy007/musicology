@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Random</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+Z3a9VlPF00aWJhFJjzKuFQKKkKtu8"
+          crossorigin="anonymous">
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        .btn {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+<!--            width: 100px;-->
+        }
+        .btn-editar {
+            background-color: #008CBA;
+        }
+        .btn-borrar {
+            background-color: #f44336;
+        }
+
+        .btn-borrar {
+            background-color: #f14457;
+        }
+
+        .resaltado {
+            background-color: yellow;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+            margin: 50px auto;
+            max-width: 600px;
+        }
+
+        label {
+            display: inline-block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input[type="text"],
+        textarea {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        button[type="submit"] {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #555;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <form action="#" th:action="@{'/actualizar-registro/{id}' (id=${registroAleatorio.id})}" th:object="${registro}" method="post">
+    <h1>Registro aleatorio</h1>
+    <div>
+<!--        <h2>Registro Aleatorio</h2>-->
+        <p>ID: <span th:text="${registroAleatorio.id}"></span></p>
+        <p>Nombre: <span th:text="${registroAleatorio.nombre}"></span></p>
+        <p>Descripción: <span th:text="${registroAleatorio.descripcion}"></span></p>
+    </div>
+    <a th:href="@{/}" class="btn btn-primary">Volver</a>
+    <a th:href="@{/random}" class="btn btn-nuevo">Random</a>
+    <a th:href="@{/editar-registro/{id}(id=${registroAleatorio.id})}" class="btn btn-editar">Editar</a>
+    <a th:href="@{/borrar-registro/{id}(id=${registroAleatorio.id})}" class="btn btn-borrar">Borrar</a>
+    </form>
+</div>
+
+</body>
+</html>
