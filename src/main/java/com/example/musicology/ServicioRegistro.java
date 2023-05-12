@@ -10,35 +10,35 @@ import java.util.Random;
 @Service
 public class ServicioRegistro {
 
-    private final RegistroRepository registroRepository;
+    private final GrupoRepository grupoRepository;
 
     @Autowired
-    public ServicioRegistro(RegistroRepository registroRepository) {
-        this.registroRepository = registroRepository;
+    public ServicioRegistro(GrupoRepository grupoRepository) {
+        this.grupoRepository = grupoRepository;
     }
 
-    public List<Registro> obtenerTodos() {
-        return registroRepository.findAll();
+    public List<Grupo> obtenerTodos() {
+        return grupoRepository.findAll();
     }
 
-    public Optional<Registro> obtenerPorId(Long id) {
-        return registroRepository.findById(id);
+    public Optional<Grupo> obtenerPorId(Long id) {
+        return grupoRepository.findById(id);
     }
 
-    public Registro guardar(Registro registro) {
-        return registroRepository.save(registro);
+    public Grupo guardar(Grupo grupo) {
+        return grupoRepository.save(grupo);
     }
 
     public void borrar(Long id) {
-        registroRepository.deleteById(id);
+        grupoRepository.deleteById(id);
     }
 
-    public Registro obtenerRegistroAleatorio() {
+    public Grupo obtenerRegistroAleatorio() {
         Random rand = new Random();
-        long count = registroRepository.count(); // obtener el número de registros en la tabla
+        long count = grupoRepository.count(); // obtener el número de registros en la tabla
         Long randomId = (long) rand.nextInt((int) count) + 1; // seleccionar un ID aleatorio dentro del rango de IDs de registros existentes
         System.out.println("el indice es: " + randomId);
-        return registroRepository.findById(randomId).orElse(null); // obtener el registro correspondiente al ID aleatorio
+        return grupoRepository.findById(randomId).orElse(null); // obtener el registro correspondiente al ID aleatorio
 
     }
 }

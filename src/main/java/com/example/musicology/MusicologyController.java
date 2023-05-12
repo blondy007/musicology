@@ -8,66 +8,68 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.List;
-
 @Controller
-public class RegistroController {
+public class MusicologyController {
     @Autowired
-    private RegistroRepository registroRepository;
+    private GrupoRepository grupoRepository;
 
     @Autowired
     ServicioRegistro servicioRegistro;
 
     @GetMapping("/")
     public String listaRegistros(Model model) {
-        model.addAttribute("registros", registroRepository.findAll());
+        model.addAttribute("registros", grupoRepository.findAll());
         return "lista-registros";
     }
 
     @GetMapping("/nuevo-registro")
     public String nuevoRegistroForm(Model model) {
-        model.addAttribute("registro", new Registro());
+        model.addAttribute("registro", new Grupo());
         return "nuevo-registro";
     }
 
     @PostMapping("/guardar-registro")
-    public String guardarRegistro(@ModelAttribute Registro registro) {
-        registroRepository.save(registro);
+    public String guardarRegistro(@ModelAttribute Grupo grupo) {
+        grupoRepository.save(grupo);
         return "redirect:/";
     }
 
     @GetMapping("/editar-registro/{id}")
     public String editarRegistroForm(@PathVariable("id") Long id, Model model) {
-        Registro registro = registroRepository.findById(id)
+        Grupo grupo = grupoRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Registro no válido con ID " + id));
-        model.addAttribute("registro", registro);
+        model.addAttribute("registro", grupo);
         return "editar-registro";
     }
 
     @PostMapping("/actualizar-registro/{id}")
-    public String actualizarRegistro(@PathVariable("id") Long id, @ModelAttribute Registro registro,
+    public String actualizarRegistro(@PathVariable("id") Long id, @ModelAttribute Grupo grupo,
         Model model) {
-        Registro registroAntiguo = registroRepository.findById(id)
+        Grupo grupoAntiguo = grupoRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Registro no válido con ID " + id));
-        registroAntiguo.setNombre(registro.getNombre());
-        registroAntiguo.setDescripcion(registro.getDescripcion());
-        registroRepository.save(registroAntiguo);
+        grupoAntiguo.setNombre(grupo.getNombre());
+        grupoAntiguo.setDescripcion(grupo.getDescripcion());
+        grupoAntiguo.setEstilo(grupo.getEstilo());
+        grupoAntiguo.setObservaciones(grupo.getObservaciones());
+        grupoAntiguo.setPuntuacion(grupo.getPuntuacion());
+        grupoAntiguo.setRelacionados(grupo.getRelacionados());
+        grupoRepository.save(grupoAntiguo);
         return "redirect:/";
     }
 
     @GetMapping("/borrar-registro/{id}")
     public String borrarRegistro(@PathVariable("id") Long id, Model model) {
-        Registro registro = registroRepository.findById(id)
+        Grupo grupo = grupoRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Registro no válido con ID " + id));
-        registroRepository.delete(registro);
+        grupoRepository.delete(grupo);
         return "redirect:/";
     }
 
     @GetMapping("/random")
     public String obtenerRegistroAleatorio(Model model) {
-        Registro registroAleatorio = servicioRegistro.obtenerRegistroAleatorio();
-        model.addAttribute("registroAleatorio", registroAleatorio);
-        System.out.println("el registro es: " + registroAleatorio.getId() + " " + registroAleatorio.getNombre());
+        Grupo grupoAleatorio = servicioRegistro.obtenerRegistroAleatorio();
+        model.addAttribute("registroAleatorio", grupoAleatorio);
+        System.out.println("el registro es: " + grupoAleatorio.getId() + " " + grupoAleatorio.getNombre());
         return "random";
     }
 }

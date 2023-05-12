@@ -1,40 +1,36 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
-    <meta charset="UTF-8">
-    <title>Lista de Registros</title>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css"/>
+
     <style>
         table {
             border-collapse: collapse;
             width: 100%;
         }
-
         th, td {
             text-align: left;
             padding: 8px;
         }
-
         th {
-            background-color: #4CAF50;
-            color: white;
+            background-color: #606360;
+            color: rgb(185, 181, 181);
         }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-        tr:hover {
-            background-color: #ddd;
-        }
-
+<!--        tr:nth-child(even) {-->
+<!--            background-color: #f2f2f2;-->
+<!--        }-->
+<!--        tr:nth-child(odd) {-->
+<!--            background-color: #4CAF50;-->
+<!--        }-->
+<!--        tr:hover {-->
+<!--            background-color: #ddd;-->
+<!--        }-->
         .btn {
-            background-color: #4CAF50;
+            background-color: #606360;
             border: none;
-            color: white;
+            color: rgb(185, 181, 181);
             padding: 8px 16px;
             text-align: center;
             text-decoration: none;
@@ -42,137 +38,114 @@
             font-size: 16px;
             margin: 4px 2px;
             cursor: pointer;
-<!--            width: 100px;-->
         }
         .btn-editar {
-            background-color: #008CBA;
+            background-color: #37778d;
         }
         .btn-borrar {
-            background-color: #f44336;
+            background-color: #995550; 
+            <!--#f14457;-->
         }
-
-        .btn-borrar {
-            background-color: #f14457;
-        }
-
         .resaltado {
             background-color: yellow;
         }
 
+        .star {
+          display: inline-block;
+          margin-right: 0px; /* Espacio entre estrellas */
+          font-size: 14px;
+        }
+
+        .yellow{
+            color: orange;
+        }
+
+        .gray{
+            color: gray;
+        }
+
+        .fondo{
+            background-color: rgb(61, 61, 60);
+            color: rgb(211, 206, 206);
+        }
+
+        h1 {
+          text-align: center;
+        }
+        .hidden {
+          display: none;
+        }
     </style>
 </head>
-<body>
-<h1>Lista de Registros</h1>
 
-<br>
+<body class="fondo">
+<h1>Grupos Musicales</h1>
 
-<a th:href="@{/nuevo-registro}" class="btn btn-nuevo" >Crear Registro</a>
-<a th:href="@{/random}" class="btn btn-nuevo" >Random</a>
+<a th:href="@{/nuevo-registro}" class="btn btn-nuevo">Crear Registro</a>
+<a th:href="@{/random}" class="btn btn-nuevo">Random</a>
 
-<table>
+<table id="datatable" style="width:100%" class="row-border compact stripe hover order-column">
     <thead>
-    <tr>
-        <th>ID</th>
+    <tr style="padding-top: 10px;">
         <th>Nombre</th>
+        <th>Puntuación</th>
+        <th>Estilo</th>
         <th>Descripción</th>
+        <th>Observaciones</th>
         <th></th>
         <th></th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="registro : ${registros}">
-        <td th:text="${registro.id}"></td>
         <td th:text="${registro.nombre}"></td>
-        <td th:text="${registro.descripcion}"></td>
-        <td><a href="#" onclick="openModal()" class=" grid-cell btn btn-editar">Editar</a></td>
-        <td><a href="#" onclick="openModal()" class=" grid-cell btn btn-borrar">Borrar</a></td>
-
-<!--        <td class="grid-cell" style="width: 70px;">-->
-<!--            <a th:href="@{/editar-registro/{id}(id=${registro.id})}" class="btn btn-editar">Editar</a>-->
-<!--        </td>-->
-<!--        <td class="grid-cell" style="width: 70px;">-->
-<!--            <a th:href="@{/borrar-registro/{id}(id=${registro.id})}" class="btn btn-borrar">Borrar</a>-->
-<!--        </td>-->
+        <td>
+            <div style="width: 100px;" th:attr="data-rating=${registro.puntuacion}">
+            <div class="hidden" th:text="${registro.puntuacion}"></div>
+            <span class="star"><i class="fa fa-star" th:classappend="${registro.puntuacion >= 2} ? 'yellow' : 'gray'"></i></span>
+            <span class="star"><i class="fa fa-star" th:classappend="${registro.puntuacion >= 4} ? 'yellow' : 'gray'"></i></span>
+            <span class="star"><i class="fa fa-star" th:classappend="${registro.puntuacion >= 6} ? 'yellow' : 'gray'"></i></span>
+            <span class="star"><i class="fa fa-star" th:classappend="${registro.puntuacion >= 8} ? 'yellow' : 'gray'"></i></span>
+            <span class="star"><i class="fa fa-star" th:classappend="${registro.puntuacion >= 10} ? 'yellow' : 'gray'"></i></span>
+            </div>
+        </td>
+        <td style="width: 100px;" th:text="${registro.estilo}"></td>
+        <td style="width:35%" th:text="${registro.descripcion}"></td>
+        <td style="width:35%" th:text="${registro.observaciones}"></td>
+        <td class="grid-cell" style="width: 70px;">
+            <a th:href="@{/editar-registro/{id}(id=${registro.id})}" class="btn btn-editar">Editar</a>
+        </td>
+        <td class="grid-cell" style="width: 70px;">
+            <a th:href="@{/borrar-registroXXX/{id}(id=${registro.id})}" class="btn btn-borrar">Borrar</a>
+        </td>
     </tr>
     </tbody>
+    <tfoot>
+
+    </tfoot>
 </table>
-
 <br>
-
-<a th:href="@{/nuevo-registro}" class="btn btn-nuevo" >Crear Registro</a>
-<a th:href="@{/random}" class="btn btn-nuevo" >Random</a>
-
-<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" id="modal-content">
-        </div>
-    </div>
-</div>
-
-<!-- The Modal -->
-<div id="myModal2" class="modal">
-    <!-- Modal content -->
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <p>Some text in the Modal..</p>
-    </div>
-</div>
-
-<div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Título de la ventana modal</h4>
-            </div>
-            <div class="modal-body">
-                <p>Contenido de la ventana modal.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    // Get the modal
-    const modal = document.getElementById("myModal");
-
-    // Get the <span> element that closes the modal
-    const span = document.getElementsByClassName("close")[0];
-
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function () {
-        modal.style.display = "none";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function (event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-
-    // Function to open the modal
-    function openModal() {
-        modal.style.display = "block";
-        $('#myModal').modal('show');
-    }
-</script>
-
+<a th:href="@{/nuevo-registro}" class="btn btn-nuevo">Crear Registro</a>
+<a th:href="@{/random}" class="btn btn-nuevo">Random</a>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
 </body>
 <script>
-    $(document).ready(function () {
-        $(".btn-editar").click(function () {
-            var url = $(this).attr('href');
-            $.get(url, function (data) {
-                $("#modal-content").html(data);
-                $("#modal").modal();
-            });
-            return false;
-        });
-    });
-</script>
+    $(document).ready( function () {
 
+        $('#datatable').DataTable( {
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+            }
+        } );
+
+    } );
+
+<!--    function_elimina(id){-->
+<!--        if (confirm( 'Esta seguro de eliminar?')){-->
+<!--        location. php ? id _ categoria=" +-->
+<!--        id _ categoria ;-->
+<!--    }-->
+
+</script>
 </html>

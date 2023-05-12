@@ -16,14 +16,14 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="registro : ${registros}">
-        <td th:text="${registro.id}"></td>
-        <td th:text="${registro.nombre}"></td>
-        <td th:text="${registro.descripcion}"></td>
+    <tr th:each="grupo : ${registros}">
+        <td th:text="${grupo.id}"></td>
+        <td th:text="${grupo.nombre}"></td>
+        <td th:text="${grupo.descripcion}"></td>
     </tr>
     </tbody>
 </table>
 
-<a href="/nuevo-registro">Crear Registro</a>
+<a href="/nuevo-grupo">Crear Registro</a>
 </body>
 </html>
