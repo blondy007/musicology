@@ -1,4 +1,6 @@
-    <script>
+
+
+/*    <script>
 // Obtén el botón para abrir la ventana modal
 var openModalBtn = document.getElementById("openModalBtn");
 
@@ -75,3 +77,4 @@ function openModal(id, nombre, descripcion) {
 
 
     </script>
+*/

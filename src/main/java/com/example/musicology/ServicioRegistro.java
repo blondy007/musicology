@@ -35,10 +35,15 @@ public class ServicioRegistro {
 
     public Grupo obtenerRegistroAleatorio() {
         Random rand = new Random();
-        long count = grupoRepository.count(); // obtener el número de registros en la tabla
-        Long randomId = (long) rand.nextInt((int) count) + 1; // seleccionar un ID aleatorio dentro del rango de IDs de registros existentes
+        long count = grupoRepository.count();
+        Long randomId = (long) rand.nextInt((int) count) + 1;
         System.out.println("el indice es: " + randomId);
-        return grupoRepository.findById(randomId).orElse(null); // obtener el registro correspondiente al ID aleatorio
+//        TODO: Funcionalidad de id no válido. Sin probar bien
+        Optional g = grupoRepository.findById(randomId);
+        if (g.isEmpty()) {
+            obtenerRegistroAleatorio();
+        }
 
+        return grupoRepository.findById(randomId).orElse(null);
     }
 }

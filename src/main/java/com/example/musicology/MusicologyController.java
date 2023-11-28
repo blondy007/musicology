@@ -36,9 +36,9 @@ public class MusicologyController {
 
     @GetMapping("/editar-registro/{id}")
     public String editarRegistroForm(@PathVariable("id") Long id, Model model) {
-        Grupo grupo = grupoRepository.findById(id)
+        Grupo registro = grupoRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Registro no válido con ID " + id));
-        model.addAttribute("registro", grupo);
+        model.addAttribute("registro", registro);
         return "editar-registro";
     }
 
@@ -53,6 +53,7 @@ public class MusicologyController {
         grupoAntiguo.setObservaciones(grupo.getObservaciones());
         grupoAntiguo.setPuntuacion(grupo.getPuntuacion());
         grupoAntiguo.setRelacionados(grupo.getRelacionados());
+//        model.addAttribute("registroAleatorio", grupoAntiguo);
         grupoRepository.save(grupoAntiguo);
         return "redirect:/";
     }
@@ -69,7 +70,7 @@ public class MusicologyController {
     public String obtenerRegistroAleatorio(Model model) {
         Grupo grupoAleatorio = servicioRegistro.obtenerRegistroAleatorio();
         model.addAttribute("registroAleatorio", grupoAleatorio);
-        System.out.println("el registro es: " + grupoAleatorio.getId() + " " + grupoAleatorio.getNombre());
+//        System.out.println("el registro es: " + grupoAleatorio.getId() + " " + grupoAleatorio.getNombre());
         return "random";
     }
 }

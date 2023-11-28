@@ -6,180 +6,72 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+Z3a9VlPF00aWJhFJjzKuFQKKkKtu8"
           crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
 
-        th, td {
-            text-align: left;
-            padding: 8px;
-        }
-
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-        tr:hover {
-            background-color: #ddd;
-        }
-
-        .btn {
-            background-color: #4CAF50;
-            border: none;
-            color: white;
-            padding: 8px 16px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-<!--            width: 100px;-->
-        }
-        .btn-editar {
-            background-color: #008CBA;
-        }
-        .btn-borrar {
-            background-color: #f44336;
-        }
-
-        .btn-borrar {
-            background-color: #f14457;
-        }
-
-        .resaltado {
-            background-color: yellow;
-        }
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+<!--            background-color: #f4f4f4;-->
         }
 
-        h1 {
-            color: #333;
-        }
 
         form {
-            background-color: #fff;
+<!--            background-color: #fff;-->
             padding: 20px;
             border-radius: 5px;
             box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
-            margin: 50px auto;
-            max-width: 600px;
+            margin: 3px 3px;
+            max-width: 530px;
         }
 
-        label {
-            display: inline-block;
-            margin-bottom: 5px;
-            color: #333;
+        p {
+            padding: 1px 10px;
         }
 
-        input[type="text"],
-        textarea {
-            padding: 10px;
-            border-radius: 5px;
-            border: none;
-            box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
-            margin-bottom: 10px;
-            width: 100%;
+        .star {
+          display: inline-block;
+          margin-right: 0px; /* Espacio entre estrellas */
+          font-size: 14px;
         }
 
-        button[type="submit"] {
-            background-color: #333;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease-in-out;
+        .yellow{
+            color: orange;
         }
 
-        button[type="submit"]:hover {
-            background-color: #555;
+        .gray{
+            color: gray;
         }
 
-
-    /* component */
-
-    .star-rating {
-    border:solid 1px #ccc;
-    display:flex;
-    flex-direction: row-reverse;
-    font-size:1.5em;
-    justify-content:space-around;
-    padding:0 .2em;
-    text-align:center;
-    width:5em;
-    }
-
-    .star-rating input {
-    display:none;
-    }
-
-    .star-rating label {
-    color:#ccc;
-    cursor:pointer;
-    }
-
-    .star-rating :checked ~ label {
-    color:#f90;
-    }
-
-    .star-rating label:hover,
-    .star-rating label:hover ~ label {
-    color:#fc0;
-    }
-
-    /* explanation */
-
-    article {
-    background-color:#ffe;
-    box-shadow:0 0 1em 1px rgba(0,0,0,.25);
-    color:#006;
-    font-family:cursive;
-    font-style:italic;
-    margin:4em;
-    max-width:30em;
-    padding:2em;
-    }
     </style>
 </head>
 <body>
 <div class="container">
 
     <form action="#" th:action="@{'/actualizar-registro/{id}' (id=${registroAleatorio.id})}" th:object="${registro}" method="post">
-    <h1>Registro aleatorio</h1>
     <div>
-<!--        <h2>Registro Aleatorio</h2>-->
         <p>ID: <span th:text="${registroAleatorio.id}"></span></p>
         <p>Nombre: <span th:text="${registroAleatorio.nombre}"></span></p>
-<!--        <div class="star-rating">-->
-<!--            <input type="radio" id="5-stars" name="rating" value="10" />-->
-<!--            <label for="5-stars" class="star">&#9733;</label>-->
-<!--            <input type="radio" id="4-stars" name="rating" value="8" />-->
-<!--            <label for="4-stars" class="star">&#9733;</label>-->
-<!--            <input type="radio" id="3-stars" name="rating" value="6" />-->
-<!--            <label for="3-stars" class="star">&#9733;</label>-->
-<!--            <input type="radio" id="2-stars" name="rating" value="4" />-->
-<!--            <label for="2-stars" class="star">&#9733;</label>-->
-<!--            <input type="radio" id="1-star" name="rating" value="2" />-->
-<!--            <label for="1-star" class="star">&#9733;</label>-->
-<!--        </div>-->
-        <p>Puntuación: <span th:text="${registroAleatorio.puntuacion}"></span></p>
+<!--        <p>Puntuación: <span th:text="${registroAleatorio.puntuacion}"></span></p>-->
+
+<!--        <script th:inline="javascript">-->
+<!--            console.log('aleatorio: [[${registroAleatorio}]]');-->
+<!--            console.log('normal: [[${registro}]]');-->
+<!--        </script>-->
+        <p> Valoración:
+            <span th:attr="data-rating=${registroAleatorio.puntuacion}">
+                <span class="star"><i class="fa fa-star" th:classappend="${registroAleatorio.puntuacion >= 2} ? 'yellow' : 'gray'"></i></span>
+                <span class="star"><i class="fa fa-star" th:classappend="${registroAleatorio.puntuacion >= 4} ? 'yellow' : 'gray'"></i></span>
+                <span class="star"><i class="fa fa-star" th:classappend="${registroAleatorio.puntuacion >= 6} ? 'yellow' : 'gray'"></i></span>
+                <span class="star"><i class="fa fa-star" th:classappend="${registroAleatorio.puntuacion >= 8} ? 'yellow' : 'gray'"></i></span>
+                <span class="star"><i class="fa fa-star" th:classappend="${registroAleatorio.puntuacion >= 10} ? 'yellow' : 'gray'"></i></span>
+            </span>
+        </p>
+
         <p>Estilo: <span th:text="${registroAleatorio.estilo}"></span></p>
         <p>Descripción: <span th:text="${registroAleatorio.descripcion}"></span>
         <p>Observaciones: <span th:text="${registroAleatorio.observaciones}"></span></p>
     </div>
-    <a th:href="@{/}" class="btn btn-primary">Volver</a>
-    <a th:href="@{/random}" class="btn btn-nuevo">Random</a>
-    <a th:href="@{/editar-registro/{id}(id=${registroAleatorio.id})}" class="btn btn-editar">Editar</a>
-    <a th:href="@{/borrar-registro/{id}(id=${registroAleatorio.id})}" class="btn btn-borrar">Borrar</a>
     </form>
 </div>
 
