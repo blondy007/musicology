@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+  musicology-app:
+    container_name: musicology-app
+    image: musicology_app
+    build: .
+    ports:
+      - 9050:9050
+    environment:
+      - DATABASE_URL=jdbc:mysql://musicology_db:3306/musicologydb?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+      - DATABASE_USERNAME=root
+      - DATABASE_PASSWORD=Mus1c0LoGy
+    depends_on:
+      - musicology_db
+  musicology_db:  
+    container_name: musicology_db
+    image: mysql:8
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: Mus1c0LoGy
+      MYSQL_DB: musicologydb
+  
