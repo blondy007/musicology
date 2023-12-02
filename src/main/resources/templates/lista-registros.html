@@ -19,17 +19,41 @@
         <table id="datatable" style="width: 100%" class="row-border compact stripe hover order-column">
             <thead>
                 <tr style="padding-top: 10px">
+                    <th></th>
+                    <th></th>
                     <th>Nombre</th>
                     <th>Valoración</th>
                     <th>Estilo</th>
                     <th>Descripción</th>
                     <th>Observaciones</th>
-                    <th></th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="registro : ${registros}">
+                    <!-- Botones -->
+                    <td class="grid-cell" style="width: 70px">
+                        <button
+                            type="button"
+                            class="btn btn-success editBtn"
+                            th:data-id="${registro.id}"
+                            th:data-nombre="${registro.nombre}"
+                            th:data-puntuacion="${registro.puntuacion}"
+                            th:data-estilo="${registro.estilo}"
+                            th:data-descripcion="${registro.descripcion}"
+                            th:data-observaciones="${registro.observaciones}"
+                            data-toggle="modal"
+                            data-target="#myEditModal"
+                        >
+                            <i class="fa fa-pencil"></i>
+                            <!-- Icono de lápiz -->
+                        </button>
+                    </td>
+                    <td class="grid-cell" style="width: 70px">
+                        <a th:href="@{/borrar-registro/{id}(id=${registro.id})}" class="btn btn-borrar">
+                            <i class="fa fa-trash"></i>
+                            <!-- Icono de papelera -->
+                        </a>
+                    </td>
                     <td th:text="${registro.nombre}"></td>
                     <td>
                         <div style="width: 100px" th:attr="data-rating=${registro.puntuacion}">
@@ -44,25 +68,25 @@
                     <td style="width: 100px" th:text="${registro.estilo}"></td>
                     <td style="width: 35%" th:text="${registro.descripcion}"></td>
                     <td style="width: 35%" th:text="${registro.observaciones}"></td>
-                    <td class="grid-cell" style="width: 70px">
-                        <button
-                            type="button"
-                            class="btn btn-success editBtn"
-                            th:data-id="${registro.id}"
-                            th:data-nombre="${registro.nombre}"
-                            th:data-puntuacion="${registro.puntuacion}"
-                            th:data-estilo="${registro.estilo}"
-                            th:data-descripcion="${registro.descripcion}"
-                            th:data-observaciones="${registro.observaciones}"
-                            data-toggle="modal"
-                            data-target="#myEditModal"
-                        >
-                            Editar
-                        </button>
-                    </td>
-                    <td class="grid-cell" style="width: 70px">
-                        <a th:href="@{/borrar-registro/{id}(id=${registro.id})}" class="btn btn-borrar">Borrar</a>
-                    </td>
+<!--                    <td class="grid-cell" style="width: 70px">-->
+<!--                        <button-->
+<!--                            type="button"-->
+<!--                            class="btn btn-success editBtn"-->
+<!--                            th:data-id="${registro.id}"-->
+<!--                            th:data-nombre="${registro.nombre}"-->
+<!--                            th:data-puntuacion="${registro.puntuacion}"-->
+<!--                            th:data-estilo="${registro.estilo}"-->
+<!--                            th:data-descripcion="${registro.descripcion}"-->
+<!--                            th:data-observaciones="${registro.observaciones}"-->
+<!--                            data-toggle="modal"-->
+<!--                            data-target="#myEditModal"-->
+<!--                        >-->
+<!--                            Editar-->
+<!--                        </button>-->
+<!--                    </td>-->
+<!--                    <td class="grid-cell" style="width: 70px">-->
+<!--                        <a th:href="@{/borrar-registro/{id}(id=${registro.id})}" class="btn btn-borrar">Borrar</a>-->
+<!--                    </td>-->
                 </tr>
             </tbody>
             <tfoot></tfoot>
