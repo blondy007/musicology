@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [//]: # (Para la BBDD)
 [//]: # (Crear Archivo Dockerfile:)
 FROM mysql:latest
@@ -16,3 +17,7 @@ docker run --name my-mysql-container -p 3306:3306 -d my-mysql
 [//]: # (Para la aplicación Java)
 docker build -t musicology .
 docker run --name musicology-container -p 9050:9050 musicology
+=======
+# musicology
+Musicology
+>>>>>>> main
