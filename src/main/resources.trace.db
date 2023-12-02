@@ -1,0 +1,4 @@
+2023-05-08 20:41:54 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "REGISTRO" no encontrada
+Table "REGISTRO" not found; SQL statement:
+select registro0_.id as id1_0_, registro0_.descripcion as descripc2_0_, registro0_.nombre as nombre3_0_ from grupo registro0_ [42102-200]

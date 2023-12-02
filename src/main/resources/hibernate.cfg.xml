@@ -1,0 +1,19 @@
+<!--<!DOCTYPE hibernate-configuration PUBLIC-->
+<!--        "-//Hibernate/Hibernate Configuration DTD//EN"-->
+<!--        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">-->
+
+<!--<hibernate-configuration>-->
+<!--    <session-factory>-->
+
+<!--        &lt;!&ndash; Configuraciones de la conexión a la base de datos &ndash;&gt;-->
+<!--        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>-->
+<!--        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/musicologydb</property>-->
+<!--        <property name="hibernate.connection.username">root</property>-->
+<!--        <property name="hibernate.connection.password">Mus1c0LoGy</property>-->
+
+<!--        &lt;!&ndash; Otras configuraciones &ndash;&gt;-->
+<!--        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>-->
+<!--        <property name="hibernate.show_sql">true</property>-->
+
+<!--    </session-factory>-->
+<!--</hibernate-configuration>-->

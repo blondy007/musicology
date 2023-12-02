@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Random</title>
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+Z3a9VlPF00aWJhFJjzKuFQKKkKtu8"
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+        <script type="text/javascript" th:src="@{/js/util.js}"></script>
+    </head>
+    <body>
+        <div class="container">
+            <form action="#" th:action="@{'/actualizar-registro/{id}' (id=${registroAleatorio.id})}" th:object="${registro}" method="post">
+                <div>
+                    <p>ID: <span th:text="${registroAleatorio.id}"></span></p>
+                    <p>Nombre: <span th:text="${registroAleatorio.nombre}"></span></p>
+                    <!--        <p>Puntuación: <span th:text="${registroAleatorio.puntuacion}"></span></p>-->
+
+                    <!--        <script th:inline="javascript">-->
+                    <!--            console.log('aleatorio: [[${registroAleatorio}]]');-->
+                    <!--            console.log('normal: [[${registro}]]');-->
+                    <!--        </script>-->
+                    <p>
+                        Valoración:
+                        <span th:attr="data-rating=${registroAleatorio.puntuacion}">
+                            <span class="star"><i class="fa fa-star" th:classappend="${registroAleatorio.puntuacion >= 2} ? 'yellow' : 'gray'"></i></span>
+                            <span class="star"><i class="fa fa-star" th:classappend="${registroAleatorio.puntuacion >= 4} ? 'yellow' : 'gray'"></i></span>
+                            <span class="star"><i class="fa fa-star" th:classappend="${registroAleatorio.puntuacion >= 6} ? 'yellow' : 'gray'"></i></span>
+                            <span class="star"><i class="fa fa-star" th:classappend="${registroAleatorio.puntuacion >= 8} ? 'yellow' : 'gray'"></i></span>
+                            <span class="star"><i class="fa fa-star" th:classappend="${registroAleatorio.puntuacion >= 10} ? 'yellow' : 'gray'"></i></span>
+                        </span>
+                    </p>
+
+                    <p>Estilo: <span th:text="${registroAleatorio.estilo}"></span></p>
+                    <p>Descripción: <span th:text="${registroAleatorio.descripcion}"></span></p>
+                    <p>Observaciones: <span th:text="${registroAleatorio.observaciones}"></span></p>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
