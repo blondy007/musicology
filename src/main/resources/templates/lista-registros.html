@@ -16,7 +16,6 @@
 
         <button type="button" class="btn btn-success newBtn">Nuevo</button>
         <button type="button" class="btn btn-success rndBtn">Aleatorio</button>
-
         <table id="datatable" style="width: 100%" class="row-border compact stripe hover order-column">
             <thead>
                 <tr style="padding-top: 10px">
@@ -130,38 +129,40 @@
             });
         });
 
-        try {
-            $(".editBtn").on("click", function (event) {
-                event.preventDefault(); // Previene el comportamiento predeterminado del evento
+        $(document).ready(function () {
+            try {
+                $(".editBtn").on("click", function () {
+                    var id = $(this).data("id"); // Obtén el ID del registro
+                    var nombre = $(this).data("nombre"); // Obtén los datos del registro
+                    var puntuacion = $(this).data("puntuacion");
+                    var estilo = $(this).data("estilo");
+                    var descripcion = $(this).data("descripcion");
+                    var observaciones = $(this).data("observaciones");
 
-                var id = $(this).data("id"); // Obtén el ID del registro
-                var nombre = $(this).data("nombre"); // Obtén los datos del registro
-                var puntuacion = $(this).data("puntuacion");
-                var estilo = $(this).data("estilo");
-                var descripcion = $(this).data("descripcion");
-                var observaciones = $(this).data("observaciones");
+                    console.log("id:", id);
+                    console.log("nombre:", nombre);
+                    console.log("puntuacion:", puntuacion);
+                    console.log("estilo:", estilo);
+                    console.log("descripcion:", descripcion);
+                    console.log("observaciones:", observaciones);
 
-                console.log("id:", id);
-                console.log("nombre:", nombre);
-                console.log("puntuacion:", puntuacion);
-                console.log("estilo:", estilo);
-                console.log("descripcion:", descripcion);
-                console.log("observaciones:", observaciones);
+                    // Carga los datos en la modal
+                    $("#id").val(id);
+                    $("#nombre").val(nombre);
+                    $("#puntuacion").val(puntuacion);
+                    $("#estilo").val(estilo);
+                    $("#descripcion").val(descripcion);
+                    $("#observaciones").val(observaciones);
 
-                // Carga los datos en la modal
-                $("#id").val(id);
-                $("#nombre").val(nombre);
-                $("#puntuacion").val(puntuacion);
-                $("#estilo").val(estilo);
-                $("#descripcion").val(descripcion);
-                $("#observaciones").val(observaciones);
-
-                $("#myEditModal").modal({ show: true }); // Muestra la modal
-                debugger;
-            });
-        } catch (error) {
-            console.error("Ocurrió un error:", error);
-        }
+                    //$("#myEditModal").modal({ show: true }); // Muestra la modal
+                    $(".modal-body").load("editar-registro/" + id, function () {
+                        $("#myEditModal").modal("show");
+                    });
+                });
+            } catch (error) {
+                console.error("Ocurrió un error:", error);
+            }
+        });
 
         $(".updateBtn").on("click", function () {
             debugger;
@@ -170,7 +171,7 @@
 
         $(".newBtn").on("click", function () {
             $(".modal-body").load("nuevo-registro", function () {
-                $("#myNewModal").modal('show');
+                $("#myNewModal").modal("show");
             });
         });
 
