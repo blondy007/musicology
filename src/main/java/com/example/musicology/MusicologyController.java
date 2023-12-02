@@ -17,12 +17,12 @@ public class MusicologyController {
     ServicioRegistro servicioRegistro;
 
     @GetMapping("/")
-    public String listaRegistros(Model model) {
+    public String listaRegistros(Model model) {//se le llama
         model.addAttribute("registros", grupoRepository.findAll());
         return "lista-registros";
     }
 
-    @GetMapping("/nuevo-registro")
+    @GetMapping("/nuevo-registro")//se le llama
     public String nuevoRegistroForm(Model model) {
         model.addAttribute("registro", new Grupo());
         return "nuevo-registro";
@@ -62,11 +62,12 @@ public class MusicologyController {
     public String borrarRegistro(@PathVariable("id") Long id, Model model) {
         Grupo grupo = grupoRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Registro no válido con ID " + id));
-        grupoRepository.delete(grupo);
+        grupoRepository.delete(null);
+        //grupoRepository.delete(grupo);TODO:
         return "redirect:/";
     }
 
-    @GetMapping("/random")
+    @GetMapping("/random")//se le llama
     public String obtenerRegistroAleatorio(Model model) {
         Grupo grupoAleatorio = servicioRegistro.obtenerRegistroAleatorio();
         model.addAttribute("registroAleatorio", grupoAleatorio);

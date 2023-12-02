@@ -1,324 +1,183 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+        <script type="text/javascript" th:src="@{/js/util.js}"></script>
+    </head>
 
-<head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        th, td {
-            text-align: left;
-            padding: 8px;
-        }
-        th {
-            background-color: #606360;
-            color: rgb(185, 181, 181);
-        }
-        /*
-<!--        tr:nth-child(even) {-->
-<!--            background-color: #f2f2f2;-->
-<!--        }-->
-<!--        tr:nth-child(odd) {-->
-<!--            background-color: #4CAF50;-->
-<!--        }-->
-<!--        tr:hover {-->
-<!--            background-color: #ddd;-->
-<!--        }-->
-*/
-        .btn {
-            background-color: #606360;
-            border: none;
-            color: rgb(185, 181, 181);
-            padding: 8px 16px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-        }
-        .btn-editar {
-            background-color: #37778d;
-        }
-        .btn-borrar {
-            background-color: #995550; 
-            /*<!--#f14457;-->*/
-        }
-        .resaltado {
-            background-color: yellow;
-        }
+    <body class="fondo">
+        <header>
+            <h1>Musicology</h1>
+            <img th:src="@{/images/logo1.png}" />
+        </header>
 
-        .star {
-          display: inline-block;
-          margin-right: 0px; /* Espacio entre estrellas */
-          font-size: 14px;
-        }
+        <button type="button" class="btn btn-success newBtn">Nuevo</button>
+        <button type="button" class="btn btn-success rndBtn">Aleatorio</button>
 
-        .yellow{
-            color: orange;
-        }
+        <table id="datatable" style="width: 100%" class="row-border compact stripe hover order-column">
+            <thead>
+                <tr style="padding-top: 10px">
+                    <th>Nombre</th>
+                    <th>Valoración</th>
+                    <th>Estilo</th>
+                    <th>Descripción</th>
+                    <th>Observaciones</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="registro : ${registros}">
+                    <td th:text="${registro.nombre}"></td>
+                    <td>
+                        <div style="width: 100px" th:attr="data-rating=${registro.puntuacion}">
+                            <div class="hidden" th:text="${registro.puntuacion}"></div>
+                            <span class="star"><i class="fa fa-star" th:classappend="${registro.puntuacion >= 2} ? 'yellow' : 'gray'"></i></span>
+                            <span class="star"><i class="fa fa-star" th:classappend="${registro.puntuacion >= 4} ? 'yellow' : 'gray'"></i></span>
+                            <span class="star"><i class="fa fa-star" th:classappend="${registro.puntuacion >= 6} ? 'yellow' : 'gray'"></i></span>
+                            <span class="star"><i class="fa fa-star" th:classappend="${registro.puntuacion >= 8} ? 'yellow' : 'gray'"></i></span>
+                            <span class="star"><i class="fa fa-star" th:classappend="${registro.puntuacion >= 10} ? 'yellow' : 'gray'"></i></span>
+                        </div>
+                    </td>
+                    <td style="width: 100px" th:text="${registro.estilo}"></td>
+                    <td style="width: 35%" th:text="${registro.descripcion}"></td>
+                    <td style="width: 35%" th:text="${registro.observaciones}"></td>
+                    <td class="grid-cell" style="width: 70px">
+                        <button
+                            type="button"
+                            class="btn btn-success editBtn"
+                            th:data-id="${registro.id}"
+                            th:data-nombre="${registro.nombre}"
+                            th:data-puntuacion="${registro.puntuacion}"
+                            th:data-estilo="${registro.estilo}"
+                            th:data-descripcion="${registro.descripcion}"
+                            th:data-observaciones="${registro.observaciones}"
+                            data-toggle="modal"
+                            data-target="#myEditModal"
+                        >
+                            Editar
+                        </button>
+                    </td>
+                    <td class="grid-cell" style="width: 70px">
+                        <a th:href="@{/borrar-registro/{id}(id=${registro.id})}" class="btn btn-borrar">Borrar</a>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot></tfoot>
+        </table>
 
-        .gray{
-            color: gray;
-        }
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-        .fondo{
-            background-color: rgb(61, 61, 60);
-            color: rgb(211, 206, 206);
-        }
-
-        h1 {
-          text-align: center;
-        }
-        .hidden {
-          display: none;
-        }
-
-        /* component */
-
-    .star-rating {
-        border:solid 1px #ccc;
-        display:flex;
-        flex-direction: row-reverse;
-        font-size:1.5em;
-        justify-content:space-around;
-        padding:0 .2em;
-        text-align:center;
-        width:5em;
-    }
-
-    .star-rating input {
-        display:none;
-    }
-
-    .star-rating label {
-        color:#ccc;
-        cursor:pointer;
-    }
-
-    .star-rating :checked ~ label {
-        color:#f90;
-    }
-
-    </style>
-    <title>Musicology - Tu destino para el mejor rock y metal</title>
-    <style>
-    /* Estilos para la cabecera */
-header {
-      background-color: #000;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-    }
-
-    h1 {
-      display: none; /* Oculta el texto "Musicology" */
-    }
-
-    .logo {
-      max-width: 200px; /* Ajusta el tamaño del logo según tus necesidades */
-      margin: 0 auto; /* Centra el logo horizontalmente */
-    }
-
-    p {
-      font-size: 24px;
-      margin-top: 10px;
-    }
-  </style>
-</head>
-
-<body class="fondo">
-<header>
-    <h1>Musicology</h1>
-    <img th:src="@{/images/logo1.png}"></header>
-    <!--    <p>Tu destino para el mejor rock y metal</p>-->
-
-<!--<a th:href="@{/nuevo-registro}" class="btn btn-nuevo">Crear Registro</a>-->
-<!--<a th:href="@{/random}" class="btn btn-nuevo">Random</a>-->
-<!-- Trigger the modal with a button -->
-<button type="button" class="btn btn-success newBtn">Nuevo</button>
-<button type="button" class="btn btn-success rndBtn">Aleatorio</button>
-
-<table id="datatable" style="width:100%" class="row-border compact stripe hover order-column">
-    <thead>
-    <tr style="padding-top: 10px;">
-        <th>Nombre</th>
-        <th>Valoración</th>
-        <th>Estilo</th>
-        <th>Descripción</th>
-        <th>Observaciones</th>
-        <th></th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="registro : ${registros}">
-        <td th:text="${registro.nombre}"></td>
-        <td>
-            <div style="width: 100px;" th:attr="data-rating=${registro.puntuacion}">
-                <div class="hidden" th:text="${registro.puntuacion}"></div>
-                <span class="star"><i class="fa fa-star" th:classappend="${registro.puntuacion >= 2} ? 'yellow' : 'gray'"></i></span>
-                <span class="star"><i class="fa fa-star" th:classappend="${registro.puntuacion >= 4} ? 'yellow' : 'gray'"></i></span>
-                <span class="star"><i class="fa fa-star" th:classappend="${registro.puntuacion >= 6} ? 'yellow' : 'gray'"></i></span>
-                <span class="star"><i class="fa fa-star" th:classappend="${registro.puntuacion >= 8} ? 'yellow' : 'gray'"></i></span>
-                <span class="star"><i class="fa fa-star" th:classappend="${registro.puntuacion >= 10} ? 'yellow' : 'gray'"></i></span>
+        <div class="modal fade" id="myNewModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content fondo">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                        <h4 class="modal-title">Nuevo Grupo</h4>
+                    </div>
+                    <div class="modal-body fondo"></div>
+                    <div class="modal-footer">
+                        <button style="text-align: left" type="submit" form="registroForm">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
             </div>
-        </td>
-        <td style="width: 100px;" th:text="${registro.estilo}"></td>
-        <td style="width:35%" th:text="${registro.descripcion}"></td>
-        <td style="width:35%" th:text="${registro.observaciones}"></td>
-        <td class="grid-cell" style="width: 70px;">
-            <button type="button" class="btn btn-success editBtn" id="editBtn" 
-                data-id= "${registro.nombre}"
-                data-nombre="${registro.nombre}" 
-                data-puntuacion="${registro.puntuacion}" 
-                data-estilo="${registro.estilo}"
-                data-descripcion="${registro.descripcion}"
-                data-observaciones="${registro.observaciones}"
-                data-toggle="modal" data-target="#myEditModal">Editar
-            </button>
-<!--            <a th:href="@{/editar-registro/{id}(id=${registro.id})}" class="btn btn-editar rndBtn">Editar</a>-->
-        </td>
-        <td class="grid-cell" style="width: 70px;">
-            <a th:href="@{/borrar-registroXXX/{id}(id=${registro.id})}" class="btn btn-borrar">Borrar</a>
-        </td>
-    </tr>
-    </tbody>
-    <tfoot>
+        </div>
 
-    </tfoot>
-</table>
+        <div class="modal fade" id="myRandomModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content fondo">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                        <h4 class="modal-title">Grupo aleatorio</h4>
+                    </div>
+                    <div class="modal-body fondo"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script>
-        $(document).ready( function () {
-
-        $('#datatable').DataTable( {
-            language: {
-                url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
-            }
-        } );
-
-    } );
-
-    $('.newBtn').on('click',function(){
-        $('.modal-body').load('nuevo-registro',function(){
-            $('#myNewModal').modal({show:true});
-        });
-    });
-
-    $('.rndBtn').on('click',function(){
-        $('.modal-body').load('random',function(){
-            $('#myRandomModal').modal({show:true});
-        });
-    });
-/*
-    $('.editBtn').on('click',function(){
-        $('.modal-body').load('editar-registro',function(){
-            $('#myEditModal').modal({show:true});
-        });
-    });
-    */
-    $(document).ready(function() {
-        $("#myEditModal").on("show.bs.modal", function(event) {
-            var button = $(event.relatedTarget); // Botón que activó la modal
-            debugger;
-            var id = button.data("id");
-            var nombre = button.data("nombre");
-            var puntuacion = button.data("puntuacion");
-            var estilo = button.data("estilo");
-            var descripcion = button.data("descripcion");
-            var observaciones = button.data("observaciones");
-            
-
-            var modal = $(this); // La modal actual
-
-            console.log("ID: " + button.data("id"));
-            console.log("Nombre: " + button.data("nombre"));
-            console.log("Puntuacion: " + button.data("puntuacion"));
-            console.log("Estilo: " + button.data("estilo"));
-            console.log("Descripcion: " + button.data("descripcion"));
-            console.log("Observaciones: " + button.data("observaciones"));
-            debugger;
-            // Resto de las acciones que necesites realizar con los datos
-
-            modal.find("#registro").text(nombre); // Agregar valor al elemento de la modal con ID "registro"
+        <div class="modal fade" id="myEditModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content fondo">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                        <h4 class="modal-title">Editar Grupo</h4>
+                        <p>Id del registro:</p>
+                    </div>
+                    <div class="modal-body"></div>
+                    <div class="modal-footer">
+                        <button style="text-align: left" type="submit" form="editarForm" class="updateBtn">Actualizar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        $(document).ready(function () {
+            $("#datatable").DataTable({
+                language: {
+                    url: "//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json",
+                },
             });
         });
 
+        try {
+            $(".editBtn").on("click", function (event) {
+                event.preventDefault(); // Previene el comportamiento predeterminado del evento
 
+                var id = $(this).data("id"); // Obtén el ID del registro
+                var nombre = $(this).data("nombre"); // Obtén los datos del registro
+                var puntuacion = $(this).data("puntuacion");
+                var estilo = $(this).data("estilo");
+                var descripcion = $(this).data("descripcion");
+                var observaciones = $(this).data("observaciones");
 
-</script>
+                console.log("id:", id);
+                console.log("nombre:", nombre);
+                console.log("puntuacion:", puntuacion);
+                console.log("estilo:", estilo);
+                console.log("descripcion:", descripcion);
+                console.log("observaciones:", observaciones);
 
-<!-- New Modal -->
-<div class="modal fade" id="myNewModal" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content fondo">
-            <div class="modal-header ">
-                <button type="button" class="close" data-dismiss="modal">×</button>
-                <h4 class="modal-title">Nuevo Grupo</h4>
-            </div>
-            <div class="modal-body fondo">
+                // Carga los datos en la modal
+                $("#id").val(id);
+                $("#nombre").val(nombre);
+                $("#puntuacion").val(puntuacion);
+                $("#estilo").val(estilo);
+                $("#descripcion").val(descripcion);
+                $("#observaciones").val(observaciones);
 
-            </div>
-            <div class="modal-footer">
-                <button style ="text-align: left;" type="submit">Guardar</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
+                $("#myEditModal").modal({ show: true }); // Muestra la modal
+                debugger;
+            });
+        } catch (error) {
+            console.error("Ocurrió un error:", error);
+        }
 
-<!-- Random Modal -->
-<div class="modal fade" id="myRandomModal" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content fondo">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">×</button>
-                <h4 class="modal-title">Grupo aleatorio</h4>
-            </div>
-            <div class="modal-body">
+        $(".updateBtn").on("click", function () {
+            debugger;
+            $("#editarForm").submit();
+        });
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
+        $(".newBtn").on("click", function () {
+            $(".modal-body").load("nuevo-registro", function () {
+                $("#myNewModal").modal('show');
+            });
+        });
 
-<!-- Edit Modal -->
-<div class="modal fade" id="myEditModal" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content fondo">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">×</button>
-                <h4 class="modal-title">Editar Grupo</h4>
-                <p>Id del registro: </p>
-            </div>
-            <div class="modal-body">
-
-            </div>
-            <div class="modal-footer">
-<!--                <button style ="text-align: left;" type="submit">Actualizar</button>-->
-<!--                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>-->
-<!--                <a th:href="@{/editar-registro/{id}(id=${registro.id})}" class="btn btn-editar">Editar</a>-->
-            </div>
-        </div>
-    </div>
-</div>
-
-</body>
-
+        $(".rndBtn").on("click", function () {
+            $(".modal-body").load("random", function () {
+                $("#myRandomModal").modal({ show: true });
+            });
+        });
+    </script>
 </html>
