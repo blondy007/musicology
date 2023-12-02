@@ -112,8 +112,9 @@
                         <p>Id del registro:</p>
                     </div>
                     <div class="modal-body"></div>
+
                     <div class="modal-footer">
-                        <button style="text-align: left" type="submit" form="editarForm" class="updateBtn">Actualizar</button>
+                        <button style="text-align: left" type="submit" form="editarForm">Actualizar</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
@@ -139,13 +140,6 @@
                     var descripcion = $(this).data("descripcion");
                     var observaciones = $(this).data("observaciones");
 
-                    console.log("id:", id);
-                    console.log("nombre:", nombre);
-                    console.log("puntuacion:", puntuacion);
-                    console.log("estilo:", estilo);
-                    console.log("descripcion:", descripcion);
-                    console.log("observaciones:", observaciones);
-
                     // Carga los datos en la modal
                     $("#id").val(id);
                     $("#nombre").val(nombre);
@@ -154,7 +148,10 @@
                     $("#descripcion").val(descripcion);
                     $("#observaciones").val(observaciones);
 
-                    //$("#myEditModal").modal({ show: true }); // Muestra la modal
+                    // Añade el nombre y el id del registro en la modal
+                    $(".modal-title").text("Editar Grupo: " + nombre);
+                    $(".modal-header p").text("Id del registro: " + id);
+
                     $(".modal-body").load("editar-registro/" + id, function () {
                         $("#myEditModal").modal("show");
                     });
@@ -165,7 +162,6 @@
         });
 
         $(".updateBtn").on("click", function () {
-            debugger;
             $("#editarForm").submit();
         });
 
@@ -178,6 +174,15 @@
         $(".rndBtn").on("click", function () {
             $(".modal-body").load("random", function () {
                 $("#myRandomModal").modal({ show: true });
+            });
+        });
+
+        $(document).ready(function () {
+            $(".btn-borrar").on("click", function (event) {
+                var confirmacion = confirm("¿Estás seguro de que quieres borrar este registro?");
+                if (!confirmacion) {
+                    event.preventDefault();
+                }
             });
         });
     </script>

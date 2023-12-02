@@ -261,19 +261,19 @@ color: gray;
 
 
 /* Este es el de editar, quizá corrija la desviacion de los demás forms */
-/* body {
+ body {
     font-family: Arial, sans-serif;
-<!--            background-color: #f4f4f4;-->
+           background-color: #f4f4f4;
 }
 
 form {
-<!--            background-color: #fff;-->
+            background-color: #fff;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
     margin: 3px 3px;
     max-width: 530px;
-} */
+} 
 
 label {
     display: inline-block;
@@ -292,6 +292,8 @@ textarea {
     background-color: rgb(117, 117, 116);
     color: rgb(211, 206, 206);
 }
+
+
 
 button[type="submit"] {
     background-color: #333;

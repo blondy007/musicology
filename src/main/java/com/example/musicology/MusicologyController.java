@@ -62,8 +62,7 @@ public class MusicologyController {
     public String borrarRegistro(@PathVariable("id") Long id, Model model) {
         Grupo grupo = grupoRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Registro no válido con ID " + id));
-        grupoRepository.delete(null);
-        //grupoRepository.delete(grupo);TODO:
+        grupoRepository.delete(grupo);
         return "redirect:/";
     }
 
@@ -71,7 +70,6 @@ public class MusicologyController {
     public String obtenerRegistroAleatorio(Model model) {
         Grupo grupoAleatorio = servicioRegistro.obtenerRegistroAleatorio();
         model.addAttribute("registroAleatorio", grupoAleatorio);
-//        System.out.println("el registro es: " + grupoAleatorio.getId() + " " + grupoAleatorio.getNombre());
         return "random";
     }
 }
