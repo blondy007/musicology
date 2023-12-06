@@ -17,16 +17,15 @@
         <div class="container">
             <form action="#" th:action="@{'/actualizar-registro/{id}' (id=${registroAleatorio.id})}" th:object="${registro}" method="post">
                 <div>
-                    <p>ID: <span th:text="${registroAleatorio.id}"></span></p>
-                    <p>Nombre: <span th:text="${registroAleatorio.nombre}"></span></p>
-                    <!--        <p>Puntuación: <span th:text="${registroAleatorio.puntuacion}"></span></p>-->
-
-                    <!--        <script th:inline="javascript">-->
-                    <!--            console.log('aleatorio: [[${registroAleatorio}]]');-->
-                    <!--            console.log('normal: [[${registro}]]');-->
-                    <!--        </script>-->
+                    <label for="id">ID:</label>
+                    <input type="text" id="id" th:value="${registroAleatorio.id}" readonly />
+                </div>
+                <div>
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" th:value="${registroAleatorio.nombre}" readonly />
+                </div>
+                <div>
                     <p>
-                        Valoración:
                         <span th:attr="data-rating=${registroAleatorio.puntuacion}">
                             <span class="star"><i class="fa fa-star" th:classappend="${registroAleatorio.puntuacion >= 2} ? 'yellow' : 'gray'"></i></span>
                             <span class="star"><i class="fa fa-star" th:classappend="${registroAleatorio.puntuacion >= 4} ? 'yellow' : 'gray'"></i></span>
@@ -35,10 +34,18 @@
                             <span class="star"><i class="fa fa-star" th:classappend="${registroAleatorio.puntuacion >= 10} ? 'yellow' : 'gray'"></i></span>
                         </span>
                     </p>
-
-                    <p>Estilo: <span th:text="${registroAleatorio.estilo}"></span></p>
-                    <p>Descripción: <span th:text="${registroAleatorio.descripcion}"></span></p>
-                    <p>Observaciones: <span th:text="${registroAleatorio.observaciones}"></span></p>
+                </div>
+                <div>
+                    <label for="estilo">Estilo:</label>
+                    <input type="text" id="estilo" th:value="${registroAleatorio.estilo}" readonly />
+                </div>
+                <div>
+                    <label for="descripcion">Descripción:</label>
+                    <textarea type="text" id="descripcion" th:text="${registroAleatorio.descripcion}" rows="5" readonly></textarea>
+                </div>
+                <div>
+                    <label for="observaciones">Observaciones:</label>
+                    <textarea id="observaciones" th:text="${registroAleatorio.observaciones}" rows="5" readonly></textarea>
                 </div>
             </form>
         </div>
