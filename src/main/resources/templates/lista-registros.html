@@ -134,14 +134,14 @@
 
         $(document).ready(function () {
             try {
-                $(".editBtn").on("click", function () {
-                    var id = $(this).data("id"); // Obtén el ID del registro
-                    var nombre = $(this).data("nombre"); // Obtén los datos del registro
+                $(document).on("click", ".editBtn", function () {
+                    var id = $(this).data("id");
+                    var nombre = $(this).data("nombre"); 
                     var puntuacion = $(this).data("puntuacion");
                     var estilo = $(this).data("estilo");
                     var descripcion = $(this).data("descripcion");
                     var observaciones = $(this).data("observaciones");
-
+        
                     // Carga los datos en la modal
                     $("#id").val(id);
                     $("#nombre").val(nombre);
@@ -149,11 +149,10 @@
                     $("#estilo").val(estilo);
                     $("#descripcion").val(descripcion);
                     $("#observaciones").val(observaciones);
-
-                    // Añade el nombre y el id del registro en la modal
+        
                     $(".modal-title").text("Editar Grupo: " + nombre);
                     $(".modal-header p").text("Id del registro: " + id);
-
+        
                     $(".modal-body").load("editar-registro/" + id, function () {
                         $("#myEditModal").modal("show");
                     });
