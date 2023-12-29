@@ -23,6 +23,12 @@
                 <div>
                     <label for="nombre">Nombre:</label>
                     <input type="text" id="nombre" th:value="${registroAleatorio.nombre}" readonly />
+                    <button id="copyBtn" type="button">Copiar nombre</button>
+                </div>
+                <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="1000" style="display: none;">
+                    <div class="toast-body">
+                        Banda copiada al portapapeles.
+                    </div>
                 </div>
                 <div>
                     <p>
@@ -50,4 +56,15 @@
             </form>
         </div>
     </body>
+    <script>
+        $(document).on("click", "#copyBtn", function(event) {
+            event.preventDefault();
+            var nombre = $("#nombre").val();
+            navigator.clipboard.writeText(nombre).then(function() {
+                $('#toast').toast('show');
+            }, function(err) {
+                console.error('No se pudo copiar el texto: ', err);
+            });
+        });
+    </script>
 </html>
