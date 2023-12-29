@@ -1,5 +1,6 @@
 package com.example.musicology;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +15,7 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @Table(name = "grupos")
+@AllArgsConstructor
 public class Grupo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,15 +39,15 @@ public class Grupo {
     @Column(name = "relacionados")
     private String relacionados;
 
-    // Constructor vacío
+    @Column(name = "revisiado")
+    private Boolean revisado;
+
+    @Column(name = "favorito")
+    private Boolean favorito;
+
+    @Column(name = "opinion_propia")
+    private Boolean opinion_propia;
+
     public Grupo() {}
 
-    public Grupo(String nombre, String descripcion, Integer puntuacion, String observaciones, String estilo, String relacionados) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.puntuacion = puntuacion;
-        this.observaciones = observaciones;
-        this.estilo = estilo;
-        this.relacionados = relacionados;
-    }
 }
