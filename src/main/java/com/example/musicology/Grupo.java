@@ -39,14 +39,14 @@ public class Grupo {
     @Column(name = "relacionados")
     private String relacionados;
 
-    @Column(name = "revisiado")
+    @Column(name = "revisado")
     private Boolean revisado;
 
     @Column(name = "favorito")
     private Boolean favorito;
 
-    @Column(name = "opinion_propia")
-    private Boolean opinion_propia;
+    @Column(name = "opinion_personal")
+    private Boolean opinion_personal;
 
     public Grupo() {}
 
