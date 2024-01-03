@@ -1,5 +1,5 @@
 FROM amazoncorretto:11-alpine-jdk
-COPY targetMusicology-0.0.1-SNAPSHOT.jar app.jar
+COPY target/Musicology-0.0.1-SNAPSHOT.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
 
 
