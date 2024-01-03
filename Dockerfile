@@ -1,6 +1,7 @@
-    FROM amazoncorretto:11-alpine-jdk
-    COPY target/musicology-0.0.1-SNAPSHOT.jar app.jar
-    ENTRYPOINT ["java","-jar","/app.jar"]
+FROM amazoncorretto:8-alpine-jdk
+COPY musicology/target/musicology-0.0.1-SNAPSHOT.jar app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
+
 
 ## Copiar el archivo pom.xml y descargar las dependencias del proyecto
 #COPY pom.xml /app/
