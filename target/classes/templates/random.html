@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Random</title>
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+Z3a9VlPF00aWJhFJjzKuFQKKkKtu8"
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+        <script type="text/javascript" th:src="@{/js/util.js}"></script>
+    </head>
+    <body>
+        <div class="container">
+            <form action="#" th:action="@{'/actualizar-registro/{id}' (id=${registroAleatorio.id})}" th:object="${registro}" method="post">
+                <div>
+                    <label for="id">ID:</label>
+                    <input type="text" id="id" th:value="${registroAleatorio.id}" readonly />
+                </div>
+                <div>
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" th:value="${registroAleatorio.nombre}" readonly />
+                    <button id="copyBtn" type="button">Copiar nombre</button>
+                </div>
+                <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="1000" style="display: none;">
+                    <div class="toast-body">
+                        Banda copiada al portapapeles.
+                    </div>
+                </div>
+                <div>
+                    <p>
+                        <span th:attr="data-rating=${registroAleatorio.puntuacion}">
+                            <span class="star"><i class="fa fa-star" th:classappend="${registroAleatorio.puntuacion >= 2} ? 'yellow' : 'gray'"></i></span>
+                            <span class="star"><i class="fa fa-star" th:classappend="${registroAleatorio.puntuacion >= 4} ? 'yellow' : 'gray'"></i></span>
+                            <span class="star"><i class="fa fa-star" th:classappend="${registroAleatorio.puntuacion >= 6} ? 'yellow' : 'gray'"></i></span>
+                            <span class="star"><i class="fa fa-star" th:classappend="${registroAleatorio.puntuacion >= 8} ? 'yellow' : 'gray'"></i></span>
+                            <span class="star"><i class="fa fa-star" th:classappend="${registroAleatorio.puntuacion >= 10} ? 'yellow' : 'gray'"></i></span>
+                        </span>
+                    </p>
+                </div>
+                <div>
+                    <label for="estilo">Estilo:</label>
+                    <input type="text" id="estilo" th:value="${registroAleatorio.estilo}" readonly />
+                </div>
+                <div>
+                    <label for="descripcion">Descripción:</label>
+                    <textarea type="text" id="descripcion" th:text="${registroAleatorio.descripcion}" rows="5" readonly></textarea>
+                </div>
+                <div>
+                    <label for="observaciones">Observaciones:</label>
+                    <textarea id="observaciones" th:text="${registroAleatorio.observaciones}" rows="5" readonly></textarea>
+                </div>
+            </form>
+        </div>
+    </body>
+    <script>
+        $(document).on("click", "#copyBtn", function(event) {
+            event.preventDefault();
+            var nombre = $("#nombre").val();
+            navigator.clipboard.writeText(nombre).then(function() {
+                $('#toast').toast('show');
+            }, function(err) {
+                console.error('No se pudo copiar el texto: ', err);
+            });
+        });
+    </script>
+</html>

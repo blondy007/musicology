@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Editar Registro</title>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+        <script type="text/javascript" th:src="@{/js/util.js}"></script>
+    </head>
+
+    <body>
+        <div class="container">
+            <form id="editarForm" action="#" th:action="@{'/actualizar-registro/{id}' (id=${id})}" th:object="${registro}" method="post">
+                <input type="hidden" id="id" name="id" th:field="*{id}" />
+                <div>
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" th:field="*{nombre}" />
+                </div>
+
+                <div class="star-rating">
+                    <input type="radio" id="5-stars" name="rating" value="10" th:field="*{puntuacion}" />
+                    <label for="5-stars" class="star">&#9733;</label>
+                    <input type="radio" id="4-stars" name="rating" value="8" th:field="*{puntuacion}" />
+                    <label for="4-stars" class="star">&#9733;</label>
+                    <input type="radio" id="3-stars" name="rating" value="6" th:field="*{puntuacion}" />
+                    <label for="3-stars" class="star">&#9733;</label>
+                    <input type="radio" id="2-stars" name="rating" value="4" th:field="*{puntuacion}" />
+                    <label for="2-stars" class="star">&#9733;</label>
+                    <input type="radio" id="1-star" name="rating" value="2" th:field="*{puntuacion}" />
+                    <label for="1-star" class="star">&#9733;</label>
+                </div>
+
+                <div>
+                    <label for="estilo">Estilo:</label>
+                    <input type="text" id="estilo" th:field="*{estilo}" />
+                </div>
+
+                <div>
+                    <label for="descripcion">Descripción:</label>
+                    <textarea type="text" id="descripcion" th:field="*{descripcion}" rows="5"></textarea>
+                </div>
+
+                <div>
+                    <label for="observaciones">Observaciones:</label>
+                    <textarea id="observaciones" th:field="*{observaciones}" rows="5"></textarea>
+                </div>
+
+                <button type="submit" class="updateBtn">Actualizar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </form>
+        </div>
+    </body>
+</html>
