@@ -15,8 +15,8 @@ public class CorsConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         config.addAllowedOrigin("http://localhost:3000");
-        config.addAllowedOrigin("https://musicology-front.web.app");
-        config.addAllowedOrigin("https://musicology-front.firebaseapp.com");
+        config.addAllowedOrigin("https://musicology-front.web.app/*");
+        config.addAllowedOrigin("https://musicology-front.firebaseapp.com/*");
         config.addAllowedOrigin("*"); // O config.addAllowedOrigin("https://musicology-front.web.app");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
