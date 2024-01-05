@@ -1,31 +1,31 @@
-CREATE TABLE grupos (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  nombre VARCHAR(50) NOT NULL,
-  descripcion VARCHAR(4000),
-  estilo VARCHAR(255),
-  puntuacion INT,
-  observaciones VARCHAR(4000),
-  relacionados VARCHAR(255),
-  revisado BOOLEAN DEFAULT FALSE,
-  favorito BOOLEAN DEFAULT FALSE,
-  opinion_personal Boolean DEFAULT FALSE,
-  fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-
-CREATE TABLE estilos (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  nombre VARCHAR(50) NOT NULL,
-  descripcion VARCHAR(4000)
-);
-
-CREATE TABLE estilos_grupo (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  id_estilo INT,
-  id_grupo INT,
-  FOREIGN KEY (id_estilo) REFERENCES estilos(id),
-  FOREIGN KEY (id_grupo) REFERENCES grupos(id)
-);
+-- CREATE TABLE grupos (
+--   id INT PRIMARY KEY AUTO_INCREMENT,
+--   nombre VARCHAR(50) NOT NULL,
+--   descripcion VARCHAR(4000),
+--   estilo VARCHAR(255),
+--   puntuacion INT,
+--   observaciones VARCHAR(4000),
+--   relacionados VARCHAR(255),
+--   revisado BOOLEAN DEFAULT FALSE,
+--   favorito BOOLEAN DEFAULT FALSE,
+--   opinion_personal Boolean DEFAULT FALSE,
+--   fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+-- );
+--
+--
+-- CREATE TABLE estilos (
+--   id INT PRIMARY KEY AUTO_INCREMENT,
+--   nombre VARCHAR(50) NOT NULL,
+--   descripcion VARCHAR(4000)
+-- );
+--
+-- CREATE TABLE estilos_grupo (
+--   id INT PRIMARY KEY AUTO_INCREMENT,
+--   id_estilo INT,
+--   id_grupo INT,
+--   FOREIGN KEY (id_estilo) REFERENCES estilos(id),
+--   FOREIGN KEY (id_grupo) REFERENCES grupos(id)
+-- );
 
 -- Inserts de prueba
 INSERT INTO grupos (nombre, descripcion) VALUES ('36 CRAZYFISTS', '');

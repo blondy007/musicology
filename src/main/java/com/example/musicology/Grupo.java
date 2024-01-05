@@ -24,13 +24,13 @@ public class Grupo {
     @Column(name = "nombre")
     private String nombre;
 
-    @Column(name = "descripcion")
+    @Column(name = "descripcion", columnDefinition = "TEXT")
     private String descripcion;
 
     @Column(name = "puntuacion")
     private Integer puntuacion;
 
-    @Column(name = "observaciones")
+    @Column(name = "observaciones", columnDefinition = "TEXT")
     private String observaciones;
 
     @Column(name = "estilo")

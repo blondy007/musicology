@@ -24,32 +24,27 @@ public class MusicologyControllerV2 {
     ServicioRegistro servicioRegistro;
 
     @GetMapping("/registros")
-    @CrossOrigin(origins = "http://localhost:3000")
     public List<Grupo> listaRegistros() {
         return grupoRepository.findAll();
     }
 
     @GetMapping("/nuevo-registro")
-    @CrossOrigin(origins = "http://localhost:3000")
     public Grupo nuevoRegistroForm() {
         return new Grupo();
     }
 
     @PostMapping("/guardar-registro")
-    @CrossOrigin(origins = "http://localhost:3000")
     public void guardarRegistro(@RequestBody Grupo grupo) {
         grupoRepository.save(grupo);
     }
 
     @GetMapping("/editar-registro/{id}")
-    @CrossOrigin(origins = "http://localhost:3000")
     public Grupo editarRegistroForm(@PathVariable("id") Long id) {
         return grupoRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Registro no válido con ID " + id));
     }
 
     @PutMapping("/actualizar-registro/{id}")
-    @CrossOrigin(origins = "http://localhost:3000")
     public void actualizarRegistro(@PathVariable("id") Long id, @RequestBody Grupo grupo) {
         Grupo grupoAntiguo = grupoRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Registro no válido con ID " + id));
@@ -63,7 +58,6 @@ public class MusicologyControllerV2 {
     }
 
     @DeleteMapping("/borrar-registro/{id}")
-    @CrossOrigin(origins = "http://localhost:3000")
     public void borrarRegistro(@PathVariable("id") Long id) {
         Grupo grupo = grupoRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Registro no válido con ID " + id));
@@ -71,7 +65,6 @@ public class MusicologyControllerV2 {
     }
 
     @GetMapping("/random")
-    @CrossOrigin(origins = "http://localhost:3000")
     public Grupo obtenerRegistroAleatorio() {
         return servicioRegistro.obtenerRegistroAleatorio();
     }
