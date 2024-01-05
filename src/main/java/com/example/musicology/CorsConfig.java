@@ -16,8 +16,11 @@ public class CorsConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         // Permitir solicitudes desde el dominio de tu aplicación Firebase
-        config.addAllowedOrigin("https://musicology-front.web.app");
         config.addAllowedOrigin("http://localhost:3000");
+        config.addAllowedOrigin("https://musicology-front.web.app");
+        config.addAllowedOrigin("https://musicology-front.firebaseapp.com");
+        config.setAllowedMethods(java.util.Arrays.asList("GET", "POST", "PUT", "DELETE"));
+        config.setAllowCredentials(true);
 
         // Puedes configurar otras opciones CORS según tus necesidades
 
