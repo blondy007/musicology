@@ -27,7 +27,12 @@ public class CorsConfig {
         configuration.addAllowedHeader("*");
 
         // Permitir que se realicen cualquier tipo de método (GET, POST, etc.)
-        configuration.addAllowedMethod("*");
+        //configuration.addAllowedMethod("*");
+        configuration.addAllowedMethod("GET");
+        configuration.addAllowedMethod("POST");
+        configuration.addAllowedMethod("PUT");
+        configuration.addAllowedMethod("DELETE");
+        configuration.addAllowedMethod("OPTIONS");
 
         // Permitir el envío de cookies junto con la solicitud
         //configuration.setAllowCredentials(true);
