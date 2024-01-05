@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/v2")
+@CrossOrigin(origins = {"http://localhost", "https://musicology-front.web.app", "https://musicology-front.firebaseapp.com"})
 public class MusicologyControllerV2 {
 
     @Autowired
