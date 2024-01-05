@@ -1,38 +1,49 @@
 package com.example.musicology;
 
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+
 
 @Configuration
 public class CorsConfig {
 
     @Bean
-    public CorsFilter corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.applyPermitDefaultValues();
 
         // Específicamente permitir solicitudes desde estos orígenes
-        config.addAllowedOrigin("http://localhost:3000");
-        config.addAllowedOrigin("https://musicology-front.web.app");
-        config.addAllowedOrigin("https://musicology-front.firebaseapp.com");
+        configuration.addAllowedOrigin("http://localhost:3000");
+        configuration.addAllowedOrigin("https://musicology-front.web.app");
+        configuration.addAllowedOrigin("https://musicology-front.firebaseapp.com");
 
         // Permitir que se envíen cualquier tipo de encabezado
-        config.addAllowedHeader("*");
+        configuration.addAllowedHeader("*");
 
         // Permitir que se realicen cualquier tipo de método (GET, POST, etc.)
-        config.addAllowedMethod("*");
+        configuration.addAllowedMethod("*");
 
         // Permitir el envío de cookies junto con la solicitud
-        config.setAllowCredentials(true);
+        configuration.setAllowCredentials(true);
 
-        // Configurar la fuente de configuración de CORS
-        source.registerCorsConfiguration("/**", config);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
 
-        // Devolver el filtro CORS configurado
-        return new CorsFilter(source);
+        return source;
+    }
+
+    // Agregar configuración específica para las solicitudes OPTIONS (preflight)
+    @Bean
+    public FilterRegistrationBean<CorsFilter> corsFilterRegistrationBean() {
+        FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<>(new CorsFilter(corsConfigurationSource()));
+        bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+        return bean;
     }
 
 //    @Bean
