@@ -1,6 +1,8 @@
 package com.example.musicology;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +30,18 @@ public class MusicologyControllerV2 {
     @GetMapping("/registros")
     public List<Grupo> listaRegistros() {
         return grupoRepository.findAll();
+    }
+
+    @GetMapping("/registros-options")
+    public ResponseEntity<?> handleOptionsRequest() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Access-Control-Allow-Origin", "http://localhost:3000");
+        headers.add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+        headers.add("Access-Control-Allow-Headers", "*");
+        headers.add("Access-Control-Allow-Credentials", "true");
+        headers.add("Access-Control-Max-Age", "3600");
+
+        return ResponseEntity.ok().headers(headers).build();
     }
 
     @GetMapping("/nuevo-registro")
