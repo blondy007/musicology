@@ -24,7 +24,8 @@ public class CorsConfig {
         configuration.addAllowedOrigin("https://musicology-front.firebaseapp.com");
 
         // Permitir que se envíen cualquier tipo de encabezado
-        configuration.addAllowedHeader("*");
+        //configuration.addAllowedHeader("*");
+        configuration.addAllowedHeader("Access-Control-Allow-Origin");
 
         // Permitir que se realicen cualquier tipo de método (GET, POST, etc.)
         //configuration.addAllowedMethod("*");
@@ -33,6 +34,8 @@ public class CorsConfig {
         configuration.addAllowedMethod("PUT");
         configuration.addAllowedMethod("DELETE");
         configuration.addAllowedMethod("OPTIONS");
+
+
 
         // Permitir el envío de cookies junto con la solicitud
         //configuration.setAllowCredentials(true);
