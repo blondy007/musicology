@@ -19,7 +19,7 @@ import java.util.List;
 @RestController
 @Log4j2
 @RequestMapping("/v2")
-@CrossOrigin(origins = {"http://localhost:3000", "https://musicology-front.web.app", "https://musicology-front.firebaseapp.com"})
+@CrossOrigin()
 //@CrossOrigin(origins = {"http://localhost:3000", "https://musicology-front.web.app:3000", "https://musicology-front.firebaseapp.com:3000"})
 public class MusicologyControllerV2 {
 
@@ -31,19 +31,27 @@ public class MusicologyControllerV2 {
 
     @GetMapping("/registros")
     public List<Grupo> listaRegistros() {
+//        HttpHeaders headers = new HttpHeaders();
+//        //headers.add("Access-Control-Allow-Origin", "http://localhost:3000");
+//        headers.add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+//        headers.add("Access-Control-Allow-Headers", "Access-Control-Allow-Origin");
+//        //headers.add("Access-Control-Allow-Credentials", "true");
+//        headers.add("Access-Control-Max-Age", "3600");
+//        log.info("OPTIONS request received");
+//        return ResponseEntity.ok().body(grupoRepository.findAll()).ok().headers(headers).build();
+
         return grupoRepository.findAll();
     }
 
     @GetMapping("/registros-options")
     public ResponseEntity<?> handleOptionsRequest() {
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Access-Control-Allow-Origin", "http://localhost:3000, https://musicology-front.web.app, https://musicology-front.firebaseapp.com");
+        headers.add("Access-Control-Allow-Origin", "http://localhost:3000");
         headers.add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         headers.add("Access-Control-Allow-Headers", "Access-Control-Allow-Origin");
         //headers.add("Access-Control-Allow-Credentials", "true");
         headers.add("Access-Control-Max-Age", "3600");
         log.info("OPTIONS request received");
-
         var responseEntity =  ResponseEntity.ok().headers(headers).build();
 
         return responseEntity;
